@@ -1,5 +1,5 @@
 """
-Validadores para la aplicación
+Application Validators
 """
 from datetime import datetime, timedelta
 from typing import Optional
@@ -7,36 +7,36 @@ import re
 
 
 class ValidationError(Exception):
-    """Excepción personalizada para errores de validación"""
+    """Custom exception for validation errors"""
     pass
 
 
 def validate_amount(amount: float, min_value: float = 0.01, max_value: float = 1000000) -> bool:
     """
-    Valida que un monto sea válido
+    Validates that an amount is within allowed limits
     
     Args:
-        amount: Monto a validar
-        min_value: Valor mínimo permitido
-        max_value: Valor máximo permitido
+        amount: Amount to validate
+        min_value: Minimum allowed value
+        max_value: Maximum allowed value
         
     Returns:
-        True si es válido
+        True if valid
         
     Raises:
-        ValidationError: Si el monto no es válido
+        ValidationError: If amount is invalid
     """
     if amount is None:
-        raise ValidationError("El monto es requerido")
+        raise ValidationError("Amount is required")
     
     if not isinstance(amount, (int, float)):
-        raise ValidationError("El monto debe ser un número")
+        raise ValidationError("Amount must be a number")
     
     if amount < min_value:
-        raise ValidationError(f"El monto debe ser mayor o igual a {min_value}")
+        raise ValidationError(f"Amount must be greater than or equal to {min_value}")
     
     if amount > max_value:
-        raise ValidationError(f"El monto debe ser menor o igual a {max_value}")
+        raise ValidationError(f"Amount must be less than or equal to {max_value}")
     
     return True
 
@@ -47,155 +47,155 @@ def validate_date(
     max_past_days: Optional[int] = 365
 ) -> bool:
     """
-    Valida una fecha
+    Validates a date object
     
     Args:
-        date: Fecha a validar
-        allow_future: Si se permiten fechas futuras
-        max_past_days: Máximo de días en el pasado (None = sin límite)
+        date: Date to validate
+        allow_future: Whether future dates are allowed
+        max_past_days: Maximum days in the past (None = no limit)
         
     Returns:
-        True si es válida
+        True if valid
         
     Raises:
-        ValidationError: Si la fecha no es válida
+        ValidationError: If date is invalid
     """
     if date is None:
-        raise ValidationError("La fecha es requerida")
+        raise ValidationError("Date is required")
     
     if not isinstance(date, datetime):
-        raise ValidationError("La fecha debe ser un objeto datetime")
+        raise ValidationError("Date must be a datetime object")
     
     now = datetime.now()
     
-    # Verificar si es futura
+    # Check if future
     if not allow_future and date > now:
-        raise ValidationError("La fecha no puede ser en el futuro")
+        raise ValidationError("Date cannot be in the future")
     
-    # Verificar antigüedad
+    # Check antiquity
     if max_past_days is not None:
         max_date = now - timedelta(days=max_past_days)
         if date < max_date:
-            raise ValidationError(f"La fecha no puede ser más antigua que {max_past_days} días")
+            raise ValidationError(f"Date cannot be older than {max_past_days} days")
     
     return True
 
 
 def validate_category_id(category_id: int) -> bool:
     """
-    Valida un ID de categoría
+    Validates a category ID
     
     Args:
-        category_id: ID a validar
+        category_id: ID to validate
         
     Returns:
-        True si es válido
+        True if valid
         
     Raises:
-        ValidationError: Si no es válido
+        ValidationError: If invalid
     """
     if category_id is None:
-        raise ValidationError("La categoría es requerida")
+        raise ValidationError("Category is required")
     
     if not isinstance(category_id, int):
-        raise ValidationError("El ID de categoría debe ser un entero")
+        raise ValidationError("Category ID must be an integer")
     
     if category_id <= 0:
-        raise ValidationError("El ID de categoría debe ser positivo")
+        raise ValidationError("Category ID must be positive")
     
     return True
 
 
 def validate_merchant_name(merchant: str, min_length: int = 2, max_length: int = 255) -> bool:
     """
-    Valida el nombre de un comercio
+    Validates a merchant/store name
     
     Args:
-        merchant: Nombre del comercio
-        min_length: Longitud mínima
-        max_length: Longitud máxima
+        merchant: Name of the merchant
+        min_length: Minimum length
+        max_length: Maximum length
         
     Returns:
-        True si es válido
+        True if valid
         
     Raises:
-        ValidationError: Si no es válido
+        ValidationError: If invalid
     """
     if merchant is None:
-        return True  # Merchant es opcional
+        return True  # Merchant is optional
     
     if not isinstance(merchant, str):
-        raise ValidationError("El nombre del comercio debe ser texto")
+        raise ValidationError("Merchant name must be text")
     
     merchant = merchant.strip()
     
     if len(merchant) < min_length:
-        raise ValidationError(f"El nombre del comercio debe tener al menos {min_length} caracteres")
+        raise ValidationError(f"Merchant name must have at least {min_length} characters")
     
     if len(merchant) > max_length:
-        raise ValidationError(f"El nombre del comercio no puede exceder {max_length} caracteres")
+        raise ValidationError(f"Merchant name cannot exceed {max_length} characters")
     
     return True
 
 
 def validate_description(description: str, max_length: int = 1000) -> bool:
     """
-    Valida una descripción
+    Validates a description string
     
     Args:
-        description: Descripción a validar
-        max_length: Longitud máxima
+        description: Description to validate
+        max_length: Maximum allowed length
         
     Returns:
-        True si es válida
+        True if valid
         
     Raises:
-        ValidationError: Si no es válida
+        ValidationError: If invalid
     """
     if description is None:
-        return True  # Descripción es opcional
+        return True  # Optional
     
     if not isinstance(description, str):
-        raise ValidationError("La descripción debe ser texto")
+        raise ValidationError("Description must be text")
     
     if len(description) > max_length:
-        raise ValidationError(f"La descripción no puede exceder {max_length} caracteres")
+        raise ValidationError(f"Description cannot exceed {max_length} characters")
     
     return True
 
 
 def validate_payment_method(payment_method: str) -> bool:
     """
-    Valida un método de pago
+    Validates a payment method string
     
     Args:
-        payment_method: Método de pago
+        payment_method: Payment method type
         
     Returns:
-        True si es válido
+        True if valid
         
     Raises:
-        ValidationError: Si no es válido
+        ValidationError: If invalid
     """
     valid_methods = [
-        "efectivo",
-        "tarjeta_debito",
-        "tarjeta_credito",
-        "transferencia",
+        "cash",
+        "debit_card",
+        "credit_card",
+        "transfer",
         "paypal",
-        "bizum",
-        "otro"
+        "instant_transfer",
+        "other"
     ]
     
     if payment_method is None:
-        return True  # Opcional
+        return True  # Optional
     
     if not isinstance(payment_method, str):
-        raise ValidationError("El método de pago debe ser texto")
+        raise ValidationError("Payment method must be text")
     
     if payment_method.lower() not in valid_methods:
         raise ValidationError(
-            f"Método de pago no válido. Opciones: {', '.join(valid_methods)}"
+            f"Invalid payment method. Options: {', '.join(valid_methods)}"
         )
     
     return True
@@ -203,51 +203,51 @@ def validate_payment_method(payment_method: str) -> bool:
 
 def validate_file_size(file_size: int, max_size: int = 10 * 1024 * 1024) -> bool:
     """
-    Valida el tamaño de un archivo
+    Validates file size in bytes
     
     Args:
-        file_size: Tamaño en bytes
-        max_size: Tamaño máximo permitido (por defecto 10MB)
+        file_size: Size in bytes
+        max_size: Maximum allowed size (default 10MB)
         
     Returns:
-        True si es válido
+        True if valid
         
     Raises:
-        ValidationError: Si el archivo es muy grande
+        ValidationError: If file is too large
     """
     if file_size > max_size:
         max_mb = max_size / (1024 * 1024)
-        raise ValidationError(f"El archivo no puede exceder {max_mb:.1f}MB")
+        raise ValidationError(f"File cannot exceed {max_mb:.1f}MB")
     
     return True
 
 
 def validate_file_extension(filename: str, allowed_extensions: list = None) -> bool:
     """
-    Valida la extensión de un archivo
+    Validates file extension
     
     Args:
-        filename: Nombre del archivo
-        allowed_extensions: Lista de extensiones permitidas
+        filename: Name of the file
+        allowed_extensions: List of allowed extensions
         
     Returns:
-        True si es válida
+        True if valid
         
     Raises:
-        ValidationError: Si la extensión no es válida
+        ValidationError: If extension is not allowed
     """
     if allowed_extensions is None:
         allowed_extensions = ["jpg", "jpeg", "png", "pdf"]
     
     if not filename:
-        raise ValidationError("El nombre de archivo es requerido")
+        raise ValidationError("Filename is required")
     
-    # Obtener extensión
+    # Get extension
     ext = filename.split('.')[-1].lower()
     
     if ext not in allowed_extensions:
         raise ValidationError(
-            f"Extensión no válida. Permitidas: {', '.join(allowed_extensions)}"
+            f"Invalid extension. Allowed: {', '.join(allowed_extensions)}"
         )
     
     return True
@@ -255,101 +255,101 @@ def validate_file_extension(filename: str, allowed_extensions: list = None) -> b
 
 def validate_confidence_score(confidence: float) -> bool:
     """
-    Valida un score de confianza
+    Validates an AI confidence score
     
     Args:
-        confidence: Score entre 0 y 1
+        confidence: Score between 0 and 1
         
     Returns:
-        True si es válido
+        True if valid
         
     Raises:
-        ValidationError: Si no es válido
+        ValidationError: If invalid
     """
     if confidence is None:
-        return True  # Opcional
+        return True  # Optional
     
     if not isinstance(confidence, (int, float)):
-        raise ValidationError("La confianza debe ser un número")
+        raise ValidationError("Confidence must be a number")
     
     if confidence < 0 or confidence > 1:
-        raise ValidationError("La confianza debe estar entre 0 y 1")
+        raise ValidationError("Confidence must be between 0 and 1")
     
     return True
 
 
 def validate_email(email: str) -> bool:
     """
-    Valida un email
+    Validates an email address
     
     Args:
-        email: Email a validar
+        email: Email to validate
         
     Returns:
-        True si es válido
+        True if valid
         
     Raises:
-        ValidationError: Si no es válido
+        ValidationError: If invalid
     """
     if not email:
-        raise ValidationError("El email es requerido")
+        raise ValidationError("Email is required")
     
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     
     if not re.match(pattern, email):
-        raise ValidationError("El formato del email no es válido")
+        raise ValidationError("Invalid email format")
     
     return True
 
 
 def validate_password(password: str, min_length: int = 8) -> bool:
     """
-    Valida una contraseña
+    Validates a password for security requirements
     
     Args:
-        password: Contraseña a validar
-        min_length: Longitud mínima
+        password: Password to validate
+        min_length: Minimum length
         
     Returns:
-        True si es válida
+        True if valid
         
     Raises:
-        ValidationError: Si no es válida
+        ValidationError: If invalid
     """
     if not password:
-        raise ValidationError("La contraseña es requerida")
+        raise ValidationError("Password is required")
     
     if len(password) < min_length:
-        raise ValidationError(f"La contraseña debe tener al menos {min_length} caracteres")
+        raise ValidationError(f"Password must have at least {min_length} characters")
     
-    # Verificar que contenga al menos una letra y un número
+    # Check for at least one letter and one number
     has_letter = any(c.isalpha() for c in password)
     has_number = any(c.isdigit() for c in password)
     
     if not (has_letter and has_number):
-        raise ValidationError("La contraseña debe contener letras y números")
+        raise ValidationError("Password must contain both letters and numbers")
     
     return True
 
 
 class ExpenseValidator:
-    """Validador completo para gastos"""
+    """Complete validator for expense objects"""
     
     @staticmethod
     def validate_expense_data(expense_data: dict) -> bool:
         """
-        Valida todos los datos de un gasto
+        Validates all fields in an expense data dictionary
         
         Args:
-            expense_data: Diccionario con datos del gasto
+            expense_data: Dictionary with expense data
             
         Returns:
-            True si todo es válido
+            True if valid
             
         Raises:
-            ValidationError: Si algún dato no es válido
+            ValidationError: If any data point is invalid
         """
-        # Validar campos requeridos
+        # Validate required fields
         if 'date' in expense_data:
             validate_date(expense_data['date'])
         
@@ -359,7 +359,7 @@ class ExpenseValidator:
         if 'amount' in expense_data:
             validate_amount(expense_data['amount'])
         
-        # Validar campos opcionales
+        # Validate optional fields
         if 'merchant' in expense_data and expense_data['merchant']:
             validate_merchant_name(expense_data['merchant'])
         
