@@ -57,8 +57,10 @@ backend/ml/saved_models/*.joblib
 # Data
 data/raw/*
 data/processed/*
+data/database/*.db
 !data/raw/.gitkeep
 !data/processed/.gitkeep
+!data/database/.gitkeep
 
 # Jupyter Notebooks
 .ipynb_checkpoints/
