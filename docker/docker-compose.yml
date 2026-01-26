@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persistent data storage for the database and ML models
+      - ../data:/app/data
+      # Hot-reloading for development
+      - ../backend:/app/backend
+    environment:
+      - DATABASE_URL=sqlite:///./data/database/expenses.db
+      - DEBUG=True
+    networks:
+      - expense-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    environment:
+      # Internal network URL for service-to-service communication
+      - API_URL=http://backend:8000/api
+    networks:
+      - expense-network
+    restart: unless-stopped
+
+networks:
+  expense-network:
+    driver: bridge
+
+volumes:
+  # Named volume for persistent application data
+  data:
