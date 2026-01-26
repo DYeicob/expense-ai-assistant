@@ -100,45 +100,45 @@ expense-ai-assistant/
 │   │   ├── __init__.py
 │   │   ├── main.py              # FastAPI app
 │   │   ├── routes/
-│   │   │   ├── expenses.py      # CRUD de gastos
-│   │   │   ├── upload.py        # Upload de tickets
-│   │   │   ├── analytics.py     # Estadísticas e insights
-│   │   │   └── predictions.py   # Predicciones
-│   │   └── dependencies.py      # Dependencias compartidas
+│   │   │   ├── expenses.py      
+│   │   │   ├── upload.py        
+│   │   │   ├── analytics.py     
+│   │   │   └── predictions.py   
+│   │   └── dependencies.py      
 │   │
 │   ├── services/
-│   │   ├── ocr_service.py       # Extracción de texto
-│   │   ├── parser_service.py    # Parseo de datos del ticket
-│   │   ├── classifier_service.py # Clasificación de categorías
-│   │   ├── prediction_service.py # Predicciones
-│   │   └── analytics_service.py  # Análisis y agregaciones
+│   │   ├── ocr_service.py       
+│   │   ├── parser_service.py   
+│   │   ├── classifier_service.py 
+│   │   ├── prediction_service.py
+│   │   └── analytics_service.py 
 │   │
 │   ├── models/
-│   │   ├── database.py          # Configuración DB
-│   │   ├── schemas.py           # Pydantic schemas (DTOs)
-│   │   └── tables.py            # SQLAlchemy models
+│   │   ├── database.py       
+│   │   ├── schemas.py           
+│   │   └── tables.py           
 │   │
 │   ├── ml/
 │   │   ├── classifier/
-│   │   │   ├── train.py         # Entrenamiento del clasificador
-│   │   │   ├── model.py         # Definición del modelo
-│   │   │   └── data/            # Datasets de entrenamiento
+│   │   │   ├── train.py         
+│   │   │   ├── model.py       
+│   │   │   └── data/            
 │   │   ├── predictor/
-│   │   │   ├── train.py         # Modelo de predicción
+│   │   │   ├── train.py         
 │   │   │   └── model.py
-│   │   └── saved_models/        # Modelos entrenados (.pkl, .h5)
+│   │   └── saved_models/       
 │   │
 │   ├── utils/
-│   │   ├── image_processing.py  # Preprocesamiento de imágenes
-│   │   ├── text_processing.py   # Limpieza de texto
-│   │   └── validators.py        # Validaciones
+│   │   ├── image_processing.py  
+│   │   ├── text_processing.py 
+│   │   └── validators.py        
 │   │
 │   └── config/
-│       ├── settings.py          # Configuraciones (env vars)
-│       └── constants.py         # Constantes (categorías, etc.)
+│       ├── settings.py         
+│       └── constants.py       
 │
 ├── frontend/
-│   ├── streamlit/               # Si usas Streamlit
+│   ├── streamlit/      
 │   │   ├── app.py
 │   │   ├── pages/
 │   │   │   ├── 1_upload.py
@@ -149,22 +149,18 @@ expense-ai-assistant/
 │   │       ├── charts.py
 │   │       └── forms.py
 │   │
-│   └── react/                   # Alternativa con React
-│       ├── src/
-│       ├── public/
-│       └── package.json
 │
 ├── data/
-│   ├── raw/                     # Imágenes originales
-│   ├── processed/               # Datos procesados
-│   └── database/                # SQLite file
+│   ├── raw/                     
+│   ├── processed/             
+│   └── database/               
 │
 ├── tests/
 │   ├── test_ocr.py
 │   ├── test_classifier.py
 │   └── test_api.py
 │
-├── notebooks/                   # Jupyter notebooks para exploración
+├── notebooks/                  
 │   ├── 01_ocr_exploration.ipynb
 │   ├── 02_classifier_training.ipynb
 │   └── 03_data_analysis.ipynb
