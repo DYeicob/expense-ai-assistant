@@ -174,11 +174,20 @@ expense-ai-assistant/
 │   ├── Dockerfile.frontend
 │   └── docker-compose.yml
 │
+├── scripts/
+│   ├── init_db.py
+│
 ├── .env.example
 ├── .gitignore
-├── requirements.txt
+├── LICENSE
+├── Makefile
+├── QUICKSTART.md
 ├── README.md
-└── setup.py
+├── create_database.py
+├── requirements.txt
+├── setup.py 
+├── start.bat
+└── start.sh
 ```
 
 ## 🔧 Configuration
