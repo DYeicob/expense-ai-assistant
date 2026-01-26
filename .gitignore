@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+data/database/
+
+# Logs
+logs/
+*.log
+
+# ML Models (excepto los de producción)
+backend/ml/saved_models/*.pkl
+backend/ml/saved_models/*.h5
+backend/ml/saved_models/*.joblib
+!backend/ml/saved_models/.gitkeep
+
+# Data
+data/raw/*
+data/processed/*
+data/database/*.db
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/database/.gitkeep
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Frontend
+node_modules/
+frontend/react/build/
+frontend/react/.env.local
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+temp/
